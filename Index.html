@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>काली सरकार आरजी पोर्टल - मऊरानीपुर</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            min-height: 100vh;
+            color: #fff;
+        }
+        .container { max-width: 800px; margin: 0 auto; padding: 20px; }
+        .header {
+            text-align: center;
+            padding: 30px 20px;
+            background: linear-gradient(135deg, rgba(233,69,96,0.3), rgba(255,107,107,0.2));
+            border-radius: 15px;
+            border: 2px solid #e94560;
+            margin-bottom: 30px;
+        }
+        .header h1 { font-size: 2em; color: #ffd700; margin-bottom: 10px; }
+        .header h2 { font-size: 1.3em; color: #e94560; }
+        .form-container {
+            background: rgba(255,255,255,0.05);
+            padding: 35px;
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .app-number-box {
+            background: linear-gradient(135deg, rgba(255,215,0,0.2), rgba(255,215,0,0.05));
+            border: 2px solid #ffd700;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .app-number-box h3 { color: #ffd700; margin-bottom: 10px; }
+        .app-number-display { font-size: 2.2em; font-weight: bold; color: #e94560; }
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .form-group.full-width { grid-column: 1 / -1; }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #ffd700;
+            font-weight: 600;
+        }
+        .form-group label .required { color: #e94560; margin-left: 3px; }
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid rgba(255,255,255,0.2);
+            border-radius: 10px;
+            background: rgba(0,0,0,0.3);
+            color: #fff;
+            font-size: 1em;
+        }
+        .form-group textarea { min-height: 120px; resize: vertical; }
+        .submit-btn {
+            width: 100%;
+            padding: 18px;
+            margin-top: 25px;
+            background: linear-gradient(135deg, #e94560, #ff6b6b);
+            border: none;
+            border-radius: 12px;
+            color: #fff;
+            font-size: 1.2em;
+            font-weight: 700;
+            cursor: pointer;
+        }
+        .email-setup-box {
+            background: rgba(255,193,7,0.2);
+            border: 2px solid #ffc107;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+        .email-setup-box h4 { color: #ffc107; margin-bottom: 10px; }
+        .email-input {
+            width: 100%;
+            max-width: 400px;
+            padding: 12px;
+            border: 2px solid #ffc107;
+            border-radius: 8px;
+            background: rgba(0,0,0,0.3);
+            color: #fff;
+            font-size: 1em;
+        }
+        .update-btn {
+            padding: 12px 30px;
+            margin-top: 15px;
+            background: #ffc107;
+            border: none;
+            border-radius: 8px;
+            color: #000;
+            font-weight: 600;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🙏 श्री काली सरकार दरबार 🙏</h1>
+            <h2>मऊरानीपुर, उत्तर प्रदेश</h2>
+            <p>भक्तों के संशय हेतु आरजी पंजीकरण पोर्टल</p>
+        </div>
+        <div class="form-container">
+            <div class="email-setup-box" id="email-setup">
+                <h4>📧 ईमेल सेटअप</h4>
+                <p>जहां आवेदन भेजने हैं, वह ईमेल डालें:</p>
+                <input type="email" id="admin-email" class="email-input" placeholder="aapka.email@example.com">
+                <br><button class="update-btn" onclick="updateEmail()">✅ सेट करें</button>
+            </div>
+            <div class="app-number-box">
+                <h3>📋 आपका आवेदन क्रमांक</h3>
+                <div class="app-number-display" id="app-number-display">KS-0001</div>
+            </div>
+            <form id="aarjiForm" action="" method="POST">
+                <input type="hidden" name="_subject" value="🙏 नया आरजी - काली सरकार दरबार">
+                <input type="hidden" name="_template" value="table">
+                <input type="hidden" name="_captcha" value="false">
+                <input type="hidden" name="आवेदन_क्रमांक" id="hidden-app-number">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>आवेदक का पूरा नाम <span class="required\">*</span></label>
+                        <input type="text" name="नाम" required>
+                    </div>
+                    <div class="form-group">
+                        <label>आयु <span class="required\">*</span></label>
+                        <input type="number" name="आयु" required min="1" max="120">
+                    </div>
+                    <div class="form-group">
+                        <label>जन्म तिथि <span class="required\">*</span></label>
+                        <input type="date" name="जन्म_तिथि" required>
+                    </div>
+                    <div class="form-group">
+                        <label>मोबाइल नंबर <span class="required\">*</span></label>
+                        <input type="tel" name="मोबाइल" required pattern="[0-9]{10}">
+                    </div>
+                    <div class="form-group">
+                        <label>राज्य <span class="required\">*</span></label>
+                        <select name="राज्य" required>
+                            <option value="">-- चुनें --</option>
+                            <option value="उत्तर प्रदेश">उत्तर प्रदेश</option>
+                            <option value="मध्य प्रदेश">मध्य प्रदेश</option>
+                            <option value="राजस्थान">राजस्थान</option>
+                            <option value="दिल्ली">दिल्ली</option>
+                            <option value="हरियाणा">हरियाणा</option>
+                            <option value="अन्य">अन्य</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>शहर/जिला <span class="required\">*</span></label>
+                        <input type="text" name="शहर" required>
+                    </div>
+                    <div class="form-group full-width">
+                        <label>पूरा पता</label>
+                        <input type="text" name="पता">
+                    </div>
+                    <div class="form-group full-width">
+                        <label>संशय/समस्या का विवरण <span class="required\">*</span></label>
+                        <textarea name="संशय_विवरण" required></textarea>
+                    </div>
+                </div>
+                <button type="submit" class="submit-btn">🙏 आरजी जमा करें 🙏</button>
+            </form>
+        </div>
+    </div>
+    <script>
+        function generateAppNumber() {
+            const today = new Date().toISOString().split('T')[0].replace(/-/g, '');
+            const random = Math.floor(Math.random() * 900) + 100;
+            return 'KS-' + today + '-' + random;
+        }
+        function updateAppNumber() {
+            const appNum = generateAppNumber();
+            document.getElementById('app-number-display').textContent = appNum;
+            document.getElementById('hidden-app-number').value = appNum;
+        }
+        function updateEmail() {
+            const email = document.getElementById('admin-email').value.trim();
+            if(!email || !email.includes('@')) {
+                alert('कृपया सही ईमेल डालें!');
+                return;
+            }
+            document.getElementById('aarjiForm').action = 'https://formsubmit.co/' + email;
+            document.getElementById('email-setup').style.display = 'none';
+            alert('✅ ईमेल सेट हो गया: ' + email);
+        }
+        document.getElementById('aarjiForm').addEventListener('submit', function(e) {
+            if(!this.action || this.action === window.location.href) {
+                e.preventDefault();
+                alert('⚠️ पहले ईमेल सेट करें!');
+                return;
+            }
+        });
+        updateAppNumber();
+    </script>
+</body>
+</html>
